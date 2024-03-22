@@ -31,8 +31,8 @@
       </ul>
       <!-- Search bar -->
       <form class="form-inline my-2 my-lg-0 search-bar">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" id="searchInput">
+        <button id="searchbtn" class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
       </form>
     </div>
   </div>
@@ -44,8 +44,16 @@
     <h1 id="heroH1">Welcome to Library</h1>
     <!-- Text form and green alert button -->
     <div class="form-group">
-      <input type="text" class="form-control" id="bookTitle" placeholder="Enter book title">
-      <button type="button" class="alert-green">Add Book</button>
+        <form>
+            <input type="text" class="form-control" id="bookTitle" placeholder="Enter book title">
+            <input type="text" class="form-control" id="bookAuth" placeholder="Enter book author">
+            <label for="choice">Have you read it ?:</label>
+            <select id="readChoice">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+            <button type="button" class="alert-green" id="addbtn">Add Book</button>
+        </form>
     </div>
   </div>
 </div>
@@ -54,6 +62,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <!-- Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+<script src="./script.js"></script>
 </body>
 </body>
 </html>

@@ -43,10 +43,15 @@
   cursor: pointer;
   border-radius: 8px;
 }
-#heroH1{
+#heroH1, label  {
     color: white;
 }
 #bookTitle{
     width: 50vw;
+
+}
+input{
+    padding: 20px;
+    margin-bottom: 20px;
 
 }
