@@ -1,0 +1,52 @@
+
+/* Parallax background */
+.parallax-bg {
+  background-image: url("https://images.pexels.com/photos/2767814/pexels-photo-2767814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  opacity: 0.8; /* Transparency */
+  height: 100vh;
+
+}
+
+/* Hero section styles */
+.hero-content {
+  padding-top: 150px; /* Adjust according to your needs */
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 25px;
+  background-color: rgba(0, 0, 0, 0.749);
+  margin: 40px;
+
+}
+
+/* Search bar alignment */
+.search-bar {
+  margin-left: auto; /* Align to the right */
+}
+
+/* Green alert button */
+.alert-green {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+#heroH1{
+    color: white;
+}
+#bookTitle{
+    width: 50vw;
+
+}
