@@ -1,4 +1,13 @@
 
+body{
+  background-image: url("https://images.pexels.com/photos/2767814/pexels-photo-2767814.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  opacity: 0.9; /* Transparency */
+  height: 100vh;
+  width: auto   ;
+}
 #nav-bar{
   background-color: #6d94a1;
   padding: 15px 10px;
