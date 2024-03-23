@@ -1,83 +1,171 @@
-document.addEventListener("DOMContentLoaded", function() {
-    // Define inventory list to store book objects
-    var inventory = [];
-    const searchBtn = document.getElementById("searchBtn");
-    var addBtn = document.getElementById("addBtn");
-
-    var nameInput = document.getElementById("bookTitle")
-    var authInput = document.getElementById("bookAuth")
-    var readInput = document.getElementById("readChoice")
-
-    // Adding event listener to the button
-    // addBtn.addEventListener("click", function() {
-    //     console.log(nameInput.value);
-    //     console.log(authInput.value);
-    //     console.log(readInput.value);
-        
-    // });
-    searchBtn.addEventListener("click", function() {
-        const searchInput = document.getElementById("searchInput")
-        console.log(searchInput.value);
-        
-    });
 
 
-    // Function to add a new book to the inventory
-    // function add(name, author, read) {
-    //     var newBook = {
-    //         name: name,
-    //         author: author,
-    //         read: read
-    //     };
-    //     inventory.push(newBook);
-    // }
 
-    // Function to search for a book by its name
-    function search(name) {
-        for (var i = 0; i < inventory.length; i++) {
-            if (inventory[i].name === name) {
-                return inventory[i];
-            }
-        }
-        return null; // Return null if book not found
+// WORKING OF ALL THE BUTTONS IN THE PAGE
+
+const addBookBtn = document.querySelector("#add-book-button");
+const bookForm = document.querySelector("form");
+const submitButton = document.querySelector("#submitButton");
+const cancelButton = document.querySelector("#cancelButton")
+const bookFormDiv = document.querySelector("#form-div");
+
+function showBookForm(){
+    bookFormDiv.classList.remove("hidden");
+    bookFormDiv.setAttribute("class", "shown");
+}
+function hideBookForm(){
+    bookFormDiv.classList.remove("shown");
+    bookFormDiv.setAttribute("class", "hidden");
+}
+
+
+
+addBookBtn.addEventListener("click", showBookForm);
+submitButton.addEventListener("click", hideBookForm);
+cancelButton.addEventListener("click", hideBookForm);
+
+const myLibrary = [];  //Array that holds all of the books on the page
+const booksAdded = [];
+// Parsing all the buttons and inputs
+const submitBtn = document.querySelector("#submitButton");``
+const title = document.querySelector("#title");
+const author = document.querySelector("#author");
+const pages = document.querySelector("#pages");
+const deleteBtns = document.querySelectorAll(".delete");
+const statusBtns = document.querySelectorAll(".status");
+// Parsing all the divs 
+const parentBookDiv = document.querySelector("#my-books");
+
+
+// BOOKS CONSTRUCTOR FUNCTION
+function Book(title, author, pages, isRead){
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.isRead = isRead;
+    let read;
+    if(isRead){
+        read = "Read";
     }
+    else if(!isRead){
+        read = "not read yet"; 
+    }
+    this.info = function(){
+        return(`${this.title} by ${this.author}, ${this.pages}, ${read}`);
+    };
+};
 
-    // Function to output the contents of the inventory as a table in the HTML DOM
-    function output() {
-        var table = document.getElementById("bookTable");
-        if (!table) {
-            table = document.createElement("table");
-            table.setAttribute("id", "bookTable");
-            document.body.appendChild(table);
+// BOOK PARSING FUNCTION
+function addBookTolibrary(){
+    const read = document.querySelector(".isRead").checked;
+    let newBook = new Book(title.value, author.value, pages.value, read);
+    myLibrary.push(newBook);  //Pushes the book into the my library array
+    pages.value = "";
+    title.value = "";
+    author.value ="";
+}
+
+// Changes Status
+function statusBook(e){
+    let statusId = this.getAttribute("data-book");
+    let changingStatus = document.getElementById(statusId);
+    let status = changingStatus.querySelector(".book-is-read");
+    console.log(status);
+    if(status.textContent == "Read"){
+        status.textContent = "Not Read";
+    }else{
+        status.textContent = "Read";
+    }
+}
+
+
+
+// Deletes Book
+function deleteBook(e){
+    let deleteId = this.getAttribute("data-book");
+    let deletingItem = document.getElementById(deleteId);
+    deletingItem.remove();
+}
+
+
+// Adds Books to Dom
+function pushInDom(){
+    for (let i = 0; i<myLibrary.length; i++){
+
+        // Checks if the books is already added and if it is added it skips over
+        if(booksAdded.includes(myLibrary[i].title)){
+            continue;
         }
 
-        // Clear previous table content
-        table.innerHTML = "";
+        // Creating parent book Div
+        let bookDiv = document.createElement("div");
+        bookDiv.setAttribute("class", "book");
+        bookDiv.setAttribute("id", `b${i}`);
 
-        // Create table header
-        var headerRow = table.insertRow();
-        var nameHeader = headerRow.insertCell();
-        nameHeader.textContent = "Name";
-        var authorHeader = headerRow.insertCell();
-        authorHeader.textContent = "Author";
-        var readHeader = headerRow.insertCell();
-        readHeader.textContent = "Read";
 
-        // Create table rows for each book in the inventory
-        inventory.forEach(function(book) {
-            var row = table.insertRow();
-            row.classList.add(book.name); // Add class based on book name
+        // Creating child elements and adding text to it
+        let booktitle = document.createElement("h1");
+        booktitle.setAttribute("class", "book-title");
+        booktitle.textContent += myLibrary[i].title;
 
-            var nameCell = row.insertCell();
-            nameCell.textContent = book.name;
+        let bookAuthor = document.createElement("p");
+        bookAuthor.setAttribute("class", "book-author");
+        bookAuthor.textContent += myLibrary[i].author;
 
-            var authorCell = row.insertCell();
-            authorCell.textContent = book.author;
+        let bookPages = document.createElement("p");
+        bookPages.setAttribute("class", "book-pages");
+        bookPages.textContent += myLibrary[i].pages;
 
-            var readCell = row.insertCell();
-            readCell.textContent = book.read ? "Yes" : "No";
-        });
+        let bookRead = document.createElement("p");
+        bookRead.setAttribute("class","book-is-read");
+        let bookStatus = document.createElement("button");
+        bookStatus.setAttribute("class", "status");
+        bookStatus.setAttribute("data-book", `b${i}`)
+        if(myLibrary[i].isRead == true){
+            bookRead.textContent += "Read";
+            bookStatus.textContent += "Mark Unread"
+        }else{
+            bookRead.textContent += "Not read";
+            bookStatus.textContent+="Mark Read";
+        }
+        bookStatus.addEventListener("click", statusBook);
+
+        let bookDelete = document.createElement("button");
+        bookDelete.setAttribute("class", "delete");
+        bookDelete.setAttribute("data-book", `b${i}`)
+        bookDelete.textContent += "Delete";
+        bookDelete.addEventListener("click", deleteBook);
+        
+        
+        
+
+        bookDiv.appendChild(booktitle);
+        bookDiv.appendChild(bookAuthor);
+        bookDiv.appendChild(bookPages);
+        bookDiv.appendChild(bookRead);
+        bookDiv.appendChild(bookStatus);
+        bookDiv.appendChild(bookDelete);
+        parentBookDiv.appendChild(bookDiv);
+
+        booksAdded.push(myLibrary[i].title);
     }
+};
+// this function is not complete yet to be implemented in the future a search function
+function search(name){
+    for(let i ;i<myLibrary.length;i++){
+        if(myLibrary[i].title == name){
+            return `b${i}`;
+        }
+    }
+}
 
-    output(); // Display inventory in table format
-});
+
+// EVENT LISTENERS
+submitBtn.addEventListener("click", addBookTolibrary);
+submitBtn.addEventListener("click", pushInDom);
+for(let i = 0; i<deleteBtns.length; i++){
+    deleteBtns[i].addEventListener("click", deleteBook);
+}
+for(let i = 0; i<deleteBtns.length; i++){
+    statusBtns[i].addEventListener("click", statusBook);
+}
